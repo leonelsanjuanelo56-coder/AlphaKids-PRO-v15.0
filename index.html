@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0F172A">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>AlphaKids PRO v15.5</title>
+    <title>AlphaKids PRO Master</title>
     
     <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
@@ -23,91 +23,109 @@
             --relief-light: rgba(255, 255, 255, 0.1);
         }
 
+        /* RESET & BLINDAJE VISUAL */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         ::-webkit-scrollbar { display: none; }
         * { -ms-overflow-style: none; scrollbar-width: none; }
 
-        html, body { background: var(--bg-deep); height: 100dvh; width: 100vw; overflow: hidden; position: fixed; }
-
-        body {
+        html, body { 
+            background: var(--bg-deep); 
+            height: 100dvh; 
+            width: 100vw; 
+            overflow: hidden; 
+            position: fixed; 
             font-family: 'Outfit', sans-serif;
-            background: radial-gradient(circle at top, #1E293B 0%, #0F172A 100%);
             color: var(--text);
-            display: flex; flex-direction: column;
         }
 
-        /* FLASH ENTRY */
+        body {
+            background: radial-gradient(circle at top, #1E293B 0%, #0F172A 100%);
+            display: flex; 
+            flex-direction: column;
+        }
+
+        /* FLASH LOGO ENTRY */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-deep); z-index: 5000;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.6s ease;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .logo-anim { font-size: 5rem; animation: pulse 1.5s infinite; filter: drop-shadow(0 0 15px var(--accent-gold)); }
+        .logo-anim { font-size: 6rem; filter: drop-shadow(0 0 20px var(--accent-gold)); animation: pulseFlash 1.5s infinite; }
 
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @keyframes pulseFlash {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
 
-        /* INSTALL BUTTON */
+        /* BOTÓN INSTALACIÓN NATIVA */
         #install-pwa {
-            display: none; position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+            display: none; position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
             background: var(--accent-gold); color: #000; border: none;
-            padding: 15px 25px; border-radius: 50px; font-weight: 900;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5); z-index: 1000;
+            padding: 16px 32px; border-radius: 50px; font-weight: 900;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6); z-index: 1000;
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            letter-spacing: 1px;
         }
 
-        .header { padding: 10px 15px; background: rgba(0,0,0,0.4); border-bottom: 1px solid var(--glass); flex-shrink: 0; }
-        .type-selector { display: flex; gap: 6px; max-width: 500px; margin: 0 auto; }
+        /* UI COMPONENTS */
+        .header { padding: 15px; background: rgba(0,0,0,0.4); border-bottom: 1px solid var(--glass); flex-shrink: 0; }
+        .type-selector { display: flex; gap: 8px; max-width: 500px; margin: 0 auto; }
         .type-btn {
-            flex: 1; padding: 12px 2px; border-radius: 12px; border: 1px solid var(--glass);
-            background: var(--glass); color: white; font-size: 0.65rem; font-weight: 900;
-            box-shadow: 0 4px 0 var(--relief-shadow);
+            flex: 1; padding: 12px 2px; border-radius: 14px; border: 1px solid var(--glass);
+            background: var(--glass); color: white; font-size: 0.7rem; font-weight: 900;
+            box-shadow: 0 4px 0 var(--relief-shadow); transition: 0.1s;
         }
-        .type-btn.active { background: var(--accent-gold); transform: translateY(2px); box-shadow: 0 1px 0 var(--relief-shadow); }
+        .type-btn.active { background: var(--accent-gold); transform: translateY(2px); box-shadow: 0 1px 0 var(--relief-shadow); color: #000; }
 
-        .main-content { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .main-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .screen { display: none; width: 100%; max-width: 500px; }
-        .screen.active { display: block; animation: fadeIn 0.3s; }
+        .screen.active { display: block; animation: fadeIn 0.4s ease; }
 
-        .alphabet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 12px; padding-bottom: 100px; }
+        .alphabet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 15px; padding-bottom: 120px; }
         .letter-card {
-            aspect-ratio: 1; font-size: 2.2rem; font-weight: 900;
+            aspect-ratio: 1; font-size: 2.5rem; font-weight: 900;
             background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-            border: 1px solid var(--relief-light); border-radius: 20px;
+            border: 1px solid var(--relief-light); border-radius: 24px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 6px 12px var(--relief-shadow);
+            box-shadow: 0 8px 15px var(--relief-shadow), inset 0 2px 2px var(--relief-light);
         }
-        .letter-card.selected { border: 2px solid var(--accent-blue); background: rgba(56,189,248,0.1); }
+        .letter-card.selected { border: 2.5px solid var(--accent-blue); background: rgba(56,189,248,0.15); }
 
-        .association-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; width: 100%; }
+        /* LECCIONES */
+        .association-row { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; width: 100%; }
         .syl-unit {
             background: linear-gradient(145deg, var(--accent-pink), #D81B60);
-            color: white; font-size: 1.5rem; font-weight: 900; padding: 12px; border-radius: 15px; min-width: 85px; text-align: center;
+            color: white; font-size: 1.8rem; font-weight: 900; padding: 15px; border-radius: 20px; min-width: 100px; text-align: center;
+            box-shadow: 0 5px 10px var(--relief-shadow);
         }
         .word-unit {
-            flex: 1; display: flex; align-items: center; gap: 10px; background: var(--glass);
-            padding: 12px; border-radius: 18px; border: 1px solid var(--relief-light);
+            flex: 1; display: flex; align-items: center; gap: 15px; background: var(--glass);
+            padding: 15px; border-radius: 22px; border: 1px solid var(--relief-light);
         }
-        .unit-icon { font-size: 2.2rem; }
-        .unit-text { font-size: 1.1rem; font-weight: 900; color: var(--accent-blue); }
+        .unit-icon { font-size: 2.8rem; }
+        .unit-text { font-size: 1.3rem; font-weight: 900; color: var(--accent-blue); }
 
-        nav { display: flex; background: #0F172A; border-top: 1px solid var(--glass); height: 75px; padding-bottom: env(safe-area-inset-bottom); }
-        .nav-item { flex: 1; text-align: center; padding-top: 15px; color: white; opacity: 0.4; font-size: 0.75rem; font-weight: 900; }
+        nav { display: flex; background: #070B14; border-top: 1px solid var(--glass); height: 85px; padding-bottom: env(safe-area-inset-bottom); }
+        .nav-item { flex: 1; text-align: center; padding-top: 18px; color: white; opacity: 0.4; font-size: 0.8rem; font-weight: 900; }
         .nav-item.active { opacity: 1; color: var(--accent-gold); }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounceIn { from { opacity: 0; transform: translateX(-50%) scale(0.3); } to { opacity: 1; transform: translateX(-50%) scale(1); } }
+        
         .case-upper { text-transform: uppercase; }
         .case-lower { text-transform: lowercase; }
-        .case-cursive { font-family: 'Dancing Script', cursive; text-transform: lowercase; font-size: 1.3em; }
+        .case-cursive { font-family: 'Dancing Script', cursive; text-transform: lowercase; font-size: 1.4em; }
     </style>
 </head>
 <body>
 
 <div id="splash-screen">
-    <div class="logo-anim">🚀</div>
-    <h1 style="color:var(--accent-blue); margin-top:20px; font-weight:900;">ALPHAKIDS PRO</h1>
+    <div class="logo-anim">📚</div>
+    <h2 style="color:var(--accent-blue); margin-top:20px; font-weight:900; letter-spacing:3px;">ALPHAKIDS PRO</h2>
 </div>
 
-<button id="install-pwa">📥 INSTALAR APP</button>
+<button id="install-pwa">📥 INSTALAR EN INICIO</button>
 
 <div class="header">
     <div class="type-selector">
@@ -120,44 +138,54 @@
 <div class="main-content" id="master-scroll">
     <div id="screen-study" class="screen active"><div id="studyGrid" class="alphabet-grid"></div></div>
     <div id="screen-lesson" class="screen">
-        <button onclick="showScreen('study')" style="color:var(--accent-blue); background:none; border:none; font-weight:900; margin-bottom:20px;">← VOLVER</button>
+        <button onclick="showScreen('study')" style="color:var(--accent-pink); background:none; border:none; font-weight:900; margin-bottom:25px; font-size:1.2rem;">← VOLVER</button>
         <div id="lessonContent"></div>
     </div>
     <div id="screen-config" class="screen"><div id="fullGrid" class="alphabet-grid"></div></div>
 </div>
 
 <nav>
-    <div class="nav-item active" id="n-study" onclick="showScreen('study')">🎯 ESTUDIO</div>
-    <div class="nav-item" id="n-config" onclick="showScreen('config')">⚙️ LETRAS</div>
+    <div class="nav-item active" id="n-study" onclick="showScreen('study')">🎯<br>ESTUDIO</div>
+    <div class="nav-item" id="n-config" onclick="showScreen('config')">⚙️<br>BIBLIOTECA</div>
 </nav>
 
 <script>
-    // BASE DE DATOS REVISADA Y COMPLETA
+    // DATA CORE MASTER A-Z (SÍLABAS Y PALABRAS COMPLETAS)
     const data = {
         'A': { p: [{s:'A', i:'🥑', w:'Aguacate'}, {s:'A', i:'🐝', w:'Abeja'}, {s:'A', i:'✈️', w:'Avión'}, {s:'A', i:'🌳', w:'Árbol'}]},
         'B': { p: [{s:'BA', i:'🚢', w:'Barco'}, {s:'BE', i:'👶', w:'Bebé'}, {s:'BI', i:'🚲', w:'Bicicleta'}, {s:'BO', i:'👢', w:'Botas'}, {s:'BU', i:'🦉', w:'Búho'}]},
         'C': { p: [{s:'CA', i:'🏠', w:'Casa'}, {s:'CE', i:'🦓', w:'Cebra'}, {s:'CI', i:'🕯️', w:'Ciruelo'}, {s:'CO', i:'🐰', w:'Conejo'}, {s:'CU', i:'🥄', w:'Cuchara'}]},
         'D': { p: [{s:'DA', i:'🎲', w:'Dado'}, {s:'DE', i:'🖐️', w:'Dedo'}, {s:'DI', i:'🦷', w:'Diente'}, {s:'DO', i:'🍩', w:'Dona'}, {s:'DU', i:'🍬', w:'Dulce'}]},
+        'E': { p: [{s:'E', i:'🐘', w:'Elefante'}, {s:'E', i:'⭐', w:'Estrella'}, {s:'E', i:'🪜', w:'Escalera'}, {s:'E', i:'🦔', w:'Erizo'}]},
         'F': { p: [{s:'FA', i:'🔥', w:'Fuego'}, {s:'FE', i:'🎡', w:'Feria'}, {s:'FI', i:'🚩', w:'Ficha'}, {s:'FO', i:'🔦', w:'Foco'}, {s:'FU', i:'⚽', w:'Fútbol'}]},
         'G': { p: [{s:'GA', i:'🐈', w:'Gato'}, {s:'GE', i:'🍦', w:'Gelatina'}, {s:'GI', i:'🌻', w:'Girasol'}, {s:'GO', i:'🦍', w:'Gorila'}, {s:'GU', i:'🧤', w:'Guante'}]},
-        'H': { p: [{s:'HA', i:'🍦', w:'Hada'}, {s:'HE', i:'🍦', w:'Helado'}, {s:'HI', i:'🧊', w:'Hielo'}, {s:'HO', i:'🍃', w:'Hoja'}, {s:'HU', i:'🥚', w:'Huevo'}]},
-        'J': { p: [{s:'JA', i:'🧼', w:'Jabón'}, {s:'JE', i:'🦒', w:'Jirafa'}, {s:'JI', i:'🦒', w:'Jirafa'}, {s:'JO', i:'💎', w:'Joyas'}, {s:'JU', i:'🧃', w:'Jugo'}]},
+        'H': { p: [{s:'HA', i:'🧚', w:'Hada'}, {s:'HE', i:'🍦', w:'Helado'}, {s:'HI', i:'🧊', w:'Hielo'}, {s:'HO', i:'🍃', w:'Hoja'}, {s:'HU', i:'🥚', w:'Huevo'}]},
+        'I': { p: [{s:'I', i:'🏝️', w:'Isla'}, {s:'I', i:'🦎', w:'Iguana'}, {s:'I', i:'⛪', w:'Iglesia'}, {s:'I', i:'🧲', w:'Imán'}]},
+        'J': { p: [{s:'JA', i:'🧼', w:'Jabón'}, {s:'JE', i:'🦒', w:'Jefe'}, {s:'JI', i:'🦒', w:'Jirafa'}, {s:'JO', i:'💎', w:'Joyas'}, {s:'JU', i:'🧃', w:'Jugo'}]},
+        'K': { p: [{s:'KA', i:'🥋', w:'Karate'}, {s:'KE', i:'🍅', w:'Ketchup'}, {s:'KI', i:' kiwi', w:'Kiwi'}, {s:'KO', i:'🐨', w:'Koala'}, {s:'KU', i:'🥋', w:'Kung-fu'}]},
         'L': { p: [{s:'LA', i:'✏️', w:'Lápiz'}, {s:'LE', i:'🦁', w:'León'}, {s:'LI', i:'🍋', w:'Limón'}, {s:'LO', i:'🐺', w:'Lobo'}, {s:'LU', i:'🌙', w:'Luna'}]},
         'M': { p: [{s:'MA', i:'🖐️', w:'Mano'}, {s:'ME', i:'🍎', w:'Mesa'}, {s:'MI', i:'🍯', w:'Miel'}, {s:'MO', i:'🎒', w:'Mochila'}, {s:'MU', i:'🌍', w:'Mundo'}]},
-        'N': { p: [{s:'NA', i:'🍊', w:'Naranja'}, {s:'NE', i:'☁️', w:'Neblina'}, {s:'NI', i:'👧', w:'Niña'}, {s:'NO', i:'🌃', w:'Noche'}, {s:'NU', i:'☁️', w:'Nube'}]},
+        'N': { p: [{s:'NA', i:'🍊', w:'Naranja'}, {s:'NE', i:'👶', w:'Nene'}, {s:'NI', i:'👧', w:'Niño'}, {s:'NO', i:'🌃', w:'Noche'}, {s:'NU', i:'☁️', w:'Nube'}]},
+        'Ñ': { p: [{s:'ÑA', i:'🪵', w:'Leña'}, {s:'ÑE', i:'🍼', w:'Muñeca'}, {s:'ÑI', i:'👶', w:'Meñique'}, {s:'ÑO', i:'🐂', w:'Otoño'}, {s:'ÑU', i:'🐃', w:'Ñu'}]},
+        'O': { p: [{s:'O', i:'🐻', w:'Oso'}, {s:'O', i:'👁️', w:'Ojo'}, {s:'O', i:'👂', w:'Oreja'}, {s:'O', i:'🌊', w:'Ola'}]},
         'P': { p: [{s:'PA', i:'🦆', w:'Pato'}, {s:'PE', i:'🍐', w:'Pera'}, {s:'PI', i:'🍍', w:'Piña'}, {s:'PO', i:'🐥', w:'Pollo'}, {s:'PU', i:'👊', w:'Puño'}]},
+        'Q': { p: [{s:'QUE', i:'🧀', w:'Queso'}, {s:'QUI', i:'🧪', w:'Química'}, {s:'QUE', i:'🔥', w:'Quemado'}, {s:'QUI', i:'🏛️', w:'Quinta'}]},
         'R': { p: [{s:'RA', i:'🐀', w:'Ratón'}, {s:'RE', i:'🎁', w:'Regalo'}, {s:'RI', i:'🌊', w:'Río'}, {s:'RO', i:'🌹', w:'Rosa'}, {s:'RU', i:'🎡', w:'Rueda'}]},
         'S': { p: [{s:'SA', i:'🐸', w:'Sapo'}, {s:'SE', i:'🌱', w:'Semilla'}, {s:'SI', i:'🪑', w:'Silla'}, {s:'SO', i:'☀️', w:'Sol'}, {s:'SU', i:'🌊', w:'Suma'}]},
         'T': { p: [{s:'TA', i:'🍵', w:'Taza'}, {s:'TE', i:'📺', w:'Televisor'}, {s:'TI', i:'🐯', w:'Tigre'}, {s:'TO', i:'🍅', w:'Tomate'}, {s:'TU', i:'🦜', w:'Tucán'}]},
+        'U': { p: [{s:'U', i:'🍇', w:'Uvas'}, {s:'U', i:'🦄', w:'Unicornio'}, {s:'U', i:'💅', w:'Uña'}, {s:'U', i:'1️⃣', w:'Uno'}]},
         'V': { p: [{s:'VA', i:'🐄', w:'Vaca'}, {s:'VE', i:'🕯️', w:'Vela'}, {s:'VI', i:'🎻', w:'Violín'}, {s:'VO', i:'🌋', w:'Volcán'}, {s:'VU', i:'🦅', w:'Vuelo'}]},
+        'W': { p: [{s:'WA', i:'🧇', w:'Waffle'}, {s:'WE', i:'🌐', w:'Web'}, {s:'WI', i:'📶', w:'Wi-fi'}, {s:'WO', i:'🥣', w:'Wok'}, {s:'WU', i:'🏯', w:'Wushu'}]},
+        'X': { p: [{s:'XA', i:'📱', w:'Xalapa'}, {s:'XE', i:'📠', w:'Xerox'}, {s:'XI', i:'🎸', w:'Xilófono'}, {s:'XO', i:'📱', w:'Xonotla'}, {s:'XU', i:'📱', w:'Xul-ha'}]},
+        'Y': { p: [{s:'YA', i:'⛵', w:'Yate'}, {s:'YE', i:'🥚', w:'Yema'}, {s:'YI', i:'🥋', w:'Yidis'}, {s:'YO', i:'🪀', w:'Yoyo'}, {s:'YU', i:'🐂', w:'Yunta'}]},
         'Z': { p: [{s:'ZA', i:'👟', w:'Zapato'}, {s:'ZE', i:'🦓', w:'Zebra'}, {s:'ZI', i:'💠', w:'Zigzag'}, {s:'ZO', i:'🦊', w:'Zorro'}, {s:'ZU', i:'🥕', w:'Zumo'}]}
     };
 
-    let selected = new Set(['M','P','L','S','D','T','B','N']);
+    let selected = new Set(['M','P','L','S','T','B','N','D']);
     let type = 'upper';
     let deferredPrompt;
 
-    // INSTALLATION LOGIC
+    // LOGICA PWA DIRECTA
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
@@ -181,6 +209,7 @@
     }
 
     function showScreen(id) {
+        document.getElementById('master-scroll').scrollTo(0,0);
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(`screen-${id}`).classList.add('active');
         document.getElementById('n-study').classList.toggle('active', id==='study');
@@ -209,13 +238,13 @@
         showScreen('lesson');
         const style = type==='upper' ? 'case-upper' : (type==='lower' ? 'case-lower' : 'case-cursive');
         const container = document.getElementById('lessonContent');
-        container.innerHTML = `<h1 class="${style}" style="text-align:center; font-size:4rem; color:var(--accent-gold);">${l}</h1>`;
-        const items = data[l]?.p || [{s:l, i:'✨', w:'Letra '+l}];
+        container.innerHTML = `<h1 class="${style}" style="text-align:center; font-size:4.5rem; color:var(--accent-gold); margin-bottom:20px;">${l}</h1>`;
+        const items = data[l]?.p || [];
         items.forEach(pair => {
             const row = document.createElement('div');
             row.className = 'association-row';
-            row.innerHTML = `<div class="syl-unit ${style}" onclick="speak('${pair.s}', 0.6)">${pair.s}</div>
-                             <div class="word-unit" onclick="speak('${pair.w}', 0.8)">
+            row.innerHTML = `<div class="syl-unit ${style}" onclick="speak('${pair.s}', 0.55)">${pair.s}</div>
+                             <div class="word-unit" onclick="speak('${pair.w}', 0.75)">
                                 <span class="unit-icon">${pair.i}</span>
                                 <span class="unit-text ${style}">${pair.w}</span>
                              </div>`;
@@ -227,19 +256,21 @@
     function speak(txt, rate) {
         window.speechSynthesis.cancel();
         const msg = new SpeechSynthesisUtterance(txt);
-        msg.lang = 'es-MX'; msg.rate = rate;
+        msg.lang = 'es-MX'; msg.rate = rate; msg.pitch = 1.2;
         window.speechSynthesis.speak(msg);
     }
 
-    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+    }
 
     window.onload = () => {
         render();
         setTimeout(() => {
             const splash = document.getElementById('splash-screen');
             splash.style.opacity = '0';
-            setTimeout(() => splash.style.display = 'none', 600);
-        }, 1500);
+            setTimeout(() => splash.style.display = 'none', 800);
+        }, 1800);
     };
 </script>
 </body>
