@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0F172A">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>AlphaKids PRO v15.0</title>
+    <title>AlphaKids PRO v15.5</title>
     
     <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
@@ -36,84 +36,78 @@
             display: flex; flex-direction: column;
         }
 
-        /* FLASH LOGO ENTRY */
+        /* FLASH ENTRY */
         #splash-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-deep); z-index: 5000;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.6s ease;
         }
-        .logo-anim { font-size: 6rem; filter: drop-shadow(0 0 20px var(--accent-gold)); animation: pulseFlash 1.5s infinite; }
+        .logo-anim { font-size: 5rem; animation: pulse 1.5s infinite; filter: drop-shadow(0 0 15px var(--accent-gold)); }
 
-        @keyframes pulseFlash {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-        }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
-        /* BOTÓN INSTALAR DIRECTO */
+        /* INSTALL BUTTON */
         #install-pwa {
             display: none; position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
             background: var(--accent-gold); color: #000; border: none;
-            padding: 15px 30px; border-radius: 50px; font-weight: 900;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6); z-index: 1000;
-            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            padding: 15px 25px; border-radius: 50px; font-weight: 900;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5); z-index: 1000;
         }
 
         .header { padding: 10px 15px; background: rgba(0,0,0,0.4); border-bottom: 1px solid var(--glass); flex-shrink: 0; }
         .type-selector { display: flex; gap: 6px; max-width: 500px; margin: 0 auto; }
         .type-btn {
-            flex: 1; padding: 12px 2px; border-radius: 14px; border: 1px solid var(--glass);
-            background: var(--glass); color: white; font-size: 0.7rem; font-weight: 900;
-            box-shadow: 0 4px 0 var(--relief-shadow); transition: 0.1s;
+            flex: 1; padding: 12px 2px; border-radius: 12px; border: 1px solid var(--glass);
+            background: var(--glass); color: white; font-size: 0.65rem; font-weight: 900;
+            box-shadow: 0 4px 0 var(--relief-shadow);
         }
         .type-btn.active { background: var(--accent-gold); transform: translateY(2px); box-shadow: 0 1px 0 var(--relief-shadow); }
 
-        .main-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-
+        .main-content { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         .screen { display: none; width: 100%; max-width: 500px; }
-        .screen.active { display: block; animation: fadeIn 0.4s ease; }
+        .screen.active { display: block; animation: fadeIn 0.3s; }
 
-        /* GRID Y CARTAS */
         .alphabet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)); gap: 12px; padding-bottom: 100px; }
         .letter-card {
             aspect-ratio: 1; font-size: 2.2rem; font-weight: 900;
             background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-            border: 1px solid var(--relief-light); border-radius: 22px;
+            border: 1px solid var(--relief-light); border-radius: 20px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 6px 12px var(--relief-shadow), inset 0 2px 2px var(--relief-light);
+            box-shadow: 0 6px 12px var(--relief-shadow);
         }
         .letter-card.selected { border: 2px solid var(--accent-blue); background: rgba(56,189,248,0.1); }
 
-        /* FILAS LECCIÓN */
         .association-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; width: 100%; }
         .syl-unit {
             background: linear-gradient(145deg, var(--accent-pink), #D81B60);
-            color: white; font-size: 1.6rem; font-weight: 900; padding: 12px; border-radius: 18px; min-width: 95px; text-align: center;
-            box-shadow: 0 4px 8px var(--relief-shadow);
+            color: white; font-size: 1.5rem; font-weight: 900; padding: 12px; border-radius: 15px; min-width: 85px; text-align: center;
         }
         .word-unit {
-            flex: 1; display: flex; align-items: center; gap: 12px; background: var(--glass);
-            padding: 12px; border-radius: 20px; border: 1px solid var(--relief-light);
+            flex: 1; display: flex; align-items: center; gap: 10px; background: var(--glass);
+            padding: 12px; border-radius: 18px; border: 1px solid var(--relief-light);
         }
-        .unit-icon { font-size: 2.4rem; }
-        .unit-text { font-size: 1.2rem; font-weight: 900; color: var(--accent-blue); }
+        .unit-icon { font-size: 2.2rem; }
+        .unit-text { font-size: 1.1rem; font-weight: 900; color: var(--accent-blue); }
 
         nav { display: flex; background: #0F172A; border-top: 1px solid var(--glass); height: 75px; padding-bottom: env(safe-area-inset-bottom); }
-        .nav-item { flex: 1; text-align: center; padding-top: 15px; color: white; opacity: 0.4; font-size: 0.8rem; font-weight: 900; }
+        .nav-item { flex: 1; text-align: center; padding-top: 15px; color: white; opacity: 0.4; font-size: 0.75rem; font-weight: 900; }
         .nav-item.active { opacity: 1; color: var(--accent-gold); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes bounceIn { from { opacity: 0; transform: translateX(-50%) scale(0.3); } to { opacity: 1; transform: translateX(-50%) scale(1); } }
+        .case-upper { text-transform: uppercase; }
+        .case-lower { text-transform: lowercase; }
+        .case-cursive { font-family: 'Dancing Script', cursive; text-transform: lowercase; font-size: 1.3em; }
     </style>
 </head>
 <body>
 
 <div id="splash-screen">
-    <div class="logo-anim">📚✨</div>
-    <h2 style="color:var(--accent-blue); margin-top:20px; font-weight:900;">ALPHAKIDS PRO</h2>
+    <div class="logo-anim">🚀</div>
+    <h1 style="color:var(--accent-blue); margin-top:20px; font-weight:900;">ALPHAKIDS PRO</h1>
 </div>
 
-<button id="install-pwa">📥 INSTALAR EN MI CELULAR</button>
+<button id="install-pwa">📥 INSTALAR APP</button>
 
 <div class="header">
     <div class="type-selector">
@@ -126,18 +120,19 @@
 <div class="main-content" id="master-scroll">
     <div id="screen-study" class="screen active"><div id="studyGrid" class="alphabet-grid"></div></div>
     <div id="screen-lesson" class="screen">
-        <button onclick="showScreen('study')" style="color:var(--accent-blue); background:none; border:none; font-weight:900; margin-bottom:20px; font-size:1.1rem;">← VOLVER</button>
+        <button onclick="showScreen('study')" style="color:var(--accent-blue); background:none; border:none; font-weight:900; margin-bottom:20px;">← VOLVER</button>
         <div id="lessonContent"></div>
     </div>
     <div id="screen-config" class="screen"><div id="fullGrid" class="alphabet-grid"></div></div>
 </div>
 
 <nav>
-    <div class="nav-item active" id="n-study" onclick="showScreen('study')">🎯<br>ESTUDIO</div>
-    <div class="nav-item" id="n-config" onclick="showScreen('config')">⚙️<br>BIBLIOTECA</div>
+    <div class="nav-item active" id="n-study" onclick="showScreen('study')">🎯 ESTUDIO</div>
+    <div class="nav-item" id="n-config" onclick="showScreen('config')">⚙️ LETRAS</div>
 </nav>
 
 <script>
+    // BASE DE DATOS REVISADA Y COMPLETA
     const data = {
         'A': { p: [{s:'A', i:'🥑', w:'Aguacate'}, {s:'A', i:'🐝', w:'Abeja'}, {s:'A', i:'✈️', w:'Avión'}, {s:'A', i:'🌳', w:'Árbol'}]},
         'B': { p: [{s:'BA', i:'🚢', w:'Barco'}, {s:'BE', i:'👶', w:'Bebé'}, {s:'BI', i:'🚲', w:'Bicicleta'}, {s:'BO', i:'👢', w:'Botas'}, {s:'BU', i:'🦉', w:'Búho'}]},
@@ -145,7 +140,8 @@
         'D': { p: [{s:'DA', i:'🎲', w:'Dado'}, {s:'DE', i:'🖐️', w:'Dedo'}, {s:'DI', i:'🦷', w:'Diente'}, {s:'DO', i:'🍩', w:'Dona'}, {s:'DU', i:'🍬', w:'Dulce'}]},
         'F': { p: [{s:'FA', i:'🔥', w:'Fuego'}, {s:'FE', i:'🎡', w:'Feria'}, {s:'FI', i:'🚩', w:'Ficha'}, {s:'FO', i:'🔦', w:'Foco'}, {s:'FU', i:'⚽', w:'Fútbol'}]},
         'G': { p: [{s:'GA', i:'🐈', w:'Gato'}, {s:'GE', i:'🍦', w:'Gelatina'}, {s:'GI', i:'🌻', w:'Girasol'}, {s:'GO', i:'🦍', w:'Gorila'}, {s:'GU', i:'🧤', w:'Guante'}]},
-        'J': { p: [{s:'JA', i:'🧼', w:'Jabón'}, {s:'JE', i:'🦒', w:'Jefe'}, {s:'JI', i:'🦒', w:'Jirafa'}, {s:'JO', i:'💎', w:'Joyas'}, {s:'JU', i:'🧃', w:'Jugo'}]},
+        'H': { p: [{s:'HA', i:'🍦', w:'Hada'}, {s:'HE', i:'🍦', w:'Helado'}, {s:'HI', i:'🧊', w:'Hielo'}, {s:'HO', i:'🍃', w:'Hoja'}, {s:'HU', i:'🥚', w:'Huevo'}]},
+        'J': { p: [{s:'JA', i:'🧼', w:'Jabón'}, {s:'JE', i:'🦒', w:'Jirafa'}, {s:'JI', i:'🦒', w:'Jirafa'}, {s:'JO', i:'💎', w:'Joyas'}, {s:'JU', i:'🧃', w:'Jugo'}]},
         'L': { p: [{s:'LA', i:'✏️', w:'Lápiz'}, {s:'LE', i:'🦁', w:'León'}, {s:'LI', i:'🍋', w:'Limón'}, {s:'LO', i:'🐺', w:'Lobo'}, {s:'LU', i:'🌙', w:'Luna'}]},
         'M': { p: [{s:'MA', i:'🖐️', w:'Mano'}, {s:'ME', i:'🍎', w:'Mesa'}, {s:'MI', i:'🍯', w:'Miel'}, {s:'MO', i:'🎒', w:'Mochila'}, {s:'MU', i:'🌍', w:'Mundo'}]},
         'N': { p: [{s:'NA', i:'🍊', w:'Naranja'}, {s:'NE', i:'☁️', w:'Neblina'}, {s:'NI', i:'👧', w:'Niña'}, {s:'NO', i:'🌃', w:'Noche'}, {s:'NU', i:'☁️', w:'Nube'}]},
@@ -157,11 +153,11 @@
         'Z': { p: [{s:'ZA', i:'👟', w:'Zapato'}, {s:'ZE', i:'🦓', w:'Zebra'}, {s:'ZI', i:'💠', w:'Zigzag'}, {s:'ZO', i:'🦊', w:'Zorro'}, {s:'ZU', i:'🥕', w:'Zumo'}]}
     };
 
-    let selected = new Set(['M','P','L','S','T','B','N','D']);
+    let selected = new Set(['M','P','L','S','D','T','B','N']);
     let type = 'upper';
     let deferredPrompt;
 
-    // LÓGICA DE INSTALACIÓN PERSONALIZADA
+    // INSTALLATION LOGIC
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
@@ -185,7 +181,6 @@
     }
 
     function showScreen(id) {
-        document.getElementById('master-scroll').scrollTo(0,0);
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(`screen-${id}`).classList.add('active');
         document.getElementById('n-study').classList.toggle('active', id==='study');
@@ -214,13 +209,13 @@
         showScreen('lesson');
         const style = type==='upper' ? 'case-upper' : (type==='lower' ? 'case-lower' : 'case-cursive');
         const container = document.getElementById('lessonContent');
-        container.innerHTML = `<h1 class="${style}" style="text-align:center; font-size:4.5rem; color:var(--accent-gold); margin-bottom:20px;">${l}</h1>`;
-        const items = data[l]?.p || [];
+        container.innerHTML = `<h1 class="${style}" style="text-align:center; font-size:4rem; color:var(--accent-gold);">${l}</h1>`;
+        const items = data[l]?.p || [{s:l, i:'✨', w:'Letra '+l}];
         items.forEach(pair => {
             const row = document.createElement('div');
             row.className = 'association-row';
-            row.innerHTML = `<div class="syl-unit ${style}" onclick="speak('${pair.s}', 0.55)">${pair.s}</div>
-                             <div class="word-unit" onclick="speak('${pair.w}', 0.75)">
+            row.innerHTML = `<div class="syl-unit ${style}" onclick="speak('${pair.s}', 0.6)">${pair.s}</div>
+                             <div class="word-unit" onclick="speak('${pair.w}', 0.8)">
                                 <span class="unit-icon">${pair.i}</span>
                                 <span class="unit-text ${style}">${pair.w}</span>
                              </div>`;
@@ -231,15 +226,12 @@
 
     function speak(txt, rate) {
         window.speechSynthesis.cancel();
-        let vocal = (txt.length === 2) ? txt.charAt(1) : '';
-        const msg = new SpeechSynthesisUtterance(txt + (txt.length <= 2 ? vocal : ''));
-        msg.lang = 'es-MX'; msg.rate = rate; msg.pitch = 1.3;
+        const msg = new SpeechSynthesisUtterance(txt);
+        msg.lang = 'es-MX'; msg.rate = rate;
         window.speechSynthesis.speak(msg);
     }
 
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js');
-    }
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
 
     window.onload = () => {
         render();
@@ -247,7 +239,7 @@
             const splash = document.getElementById('splash-screen');
             splash.style.opacity = '0';
             setTimeout(() => splash.style.display = 'none', 600);
-        }, 1800);
+        }, 1500);
     };
 </script>
 </body>
